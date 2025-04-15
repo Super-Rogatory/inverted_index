@@ -1,4 +1,5 @@
 import os
+import shutil
 from pyspark import SparkContext
 import re
 # tokenizer_mapper = sanitize_text + merge_counts
@@ -41,3 +42,7 @@ if __name__ == "__main__":
             if fname.startswith("part-"):
                 with open(os.path.join(output_dir, fname)) as f:
                     outfile.write(f.read())
+    # cleanup
+    sc.stop()
+    # remove intermediate files
+    shutil.rmtree("unigram_index")
